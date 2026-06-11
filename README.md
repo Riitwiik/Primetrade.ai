@@ -53,5 +53,8 @@
 ### Q
 ![Q](q.png)
 
+## Demo
+https://primetradeai-y9fipnuahlyhfcw2nsop3d.streamlit.app/
+
 ### R
 ![R](r.png)
