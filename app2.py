@@ -1,19 +1,3 @@
-"""
-Bitcoin Market Sentiment vs Hyperliquid Trader Performance Analysis
-===================================================================
-A single-file Streamlit application that performs end-to-end analysis
-of the relationship between Bitcoin Fear & Greed Index sentiment
-and Hyperliquid trader performance.
-
-Run with:  streamlit run app.py
-
-Dependencies:
-    pip install pandas numpy matplotlib seaborn plotly scipy scikit-learn streamlit
-"""
-
-# ============================================================================
-# IMPORTS
-# ============================================================================
 
 import io
 import os
@@ -63,9 +47,6 @@ from sklearn.metrics import (
 
 warnings.filterwarnings("ignore")
 
-# ============================================================================
-# CONSTANTS & CONFIGURATION
-# ============================================================================
 
 # Column name mappings: standardised names -> actual CSV column names
 COL_ACCOUNT = "Account"
@@ -159,9 +140,6 @@ SENTIMENT_COLORS = {
 
 PLOTLY_TEMPLATE = "plotly_white"
 
-# ============================================================================
-# DATA LOADING FUNCTIONS
-# ============================================================================
 
 
 def detect_encoding(file_path: str) -> str:
@@ -277,9 +255,6 @@ def parse_timestamp_ms(ts_val) -> Optional[pd.Timestamp]:
         return pd.NaT
 
 
-# ============================================================================
-# FEATURE ENGINEERING
-# ============================================================================
 
 
 def engineer_features(df: pd.DataFrame, fg_df: pd.DataFrame) -> pd.DataFrame:
@@ -401,9 +376,6 @@ def engineer_features(df: pd.DataFrame, fg_df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-# ============================================================================
-# EXPLORATORY DATA ANALYSIS — PLOTTING FUNCTIONS
-# ============================================================================
 
 
 def plot_sentiment_distribution(fg_df: pd.DataFrame) -> go.Figure:
@@ -740,9 +712,6 @@ def plot_rolling_trade_volume(df: pd.DataFrame) -> go.Figure:
     return fig
 
 
-# ============================================================================
-# STATISTICAL ANALYSIS
-# ============================================================================
 
 
 def compute_statistical_analysis(df: pd.DataFrame) -> Dict:
@@ -886,9 +855,6 @@ def format_statistical_results(results: Dict) -> str:
     return "\n".join(lines)
 
 
-# ============================================================================
-# TRADER ANALYSIS
-# ============================================================================
 
 
 def generate_trader_tables(df: pd.DataFrame) -> Dict[str, pd.DataFrame]:
@@ -966,9 +932,6 @@ def generate_trader_tables(df: pd.DataFrame) -> Dict[str, pd.DataFrame]:
     return tables
 
 
-# ============================================================================
-# MARKET INSIGHTS
-# ============================================================================
 
 
 def generate_market_insights(df: pd.DataFrame, stat_results: Dict) -> List[str]:
@@ -1097,9 +1060,6 @@ def generate_market_insights(df: pd.DataFrame, stat_results: Dict) -> List[str]:
     return insights
 
 
-# ============================================================================
-# MACHINE LEARNING
-# ============================================================================
 
 
 def build_ml_model(df: pd.DataFrame) -> Dict:
@@ -1225,9 +1185,6 @@ def build_ml_model(df: pd.DataFrame) -> Dict:
     return result
 
 
-# ============================================================================
-# STREAMLIT DASHBOARD
-# ============================================================================
 
 
 def init_streamlit_config():
@@ -1606,9 +1563,6 @@ def render_export_section(df: pd.DataFrame, trader_tables: Dict, stat_results: D
         )
 
 
-# ============================================================================
-# MAIN APPLICATION
-# ============================================================================
 
 
 @st.cache_data
@@ -1688,7 +1642,6 @@ def main():
         col6.metric("Unique Traders", "—")
         st.stop()
 
-    # --- Load data ---
     with st.spinner("Loading and processing data... This may take a moment for large datasets."):
         try:
             if use_uploads:
@@ -1715,7 +1668,6 @@ def main():
         st.warning("No data available after processing. Please check your CSV files.")
         st.stop()
 
-    # --- Now render the rest of the sidebar with filters ---
     st.sidebar.markdown("### 🔍 Filters")
 
     all_sentiments = sorted(df[COL_SENTIMENT_CATEGORY].unique().tolist())
@@ -1756,7 +1708,6 @@ def main():
         "date_range": date_range,
     }
 
-    # --- Apply filters ---
     filtered_df = apply_filters(df, filters)
 
     if filtered_df.empty:
@@ -1807,9 +1758,6 @@ def main():
     render_export_section(filtered_df, trader_tables, stat_results)
 
 
-# ============================================================================
-# ENTRY POINT
-# ============================================================================
 
 if __name__ == "__main__":
     main()
